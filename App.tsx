@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { practices } from './data/practices';
-import type { Practice, ImpactArea } from './types';
+import type { Practice, ImpactArea, ImplementationStatus } from './types';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import PracticeCard from './components/PracticeCard';
@@ -12,6 +12,7 @@ const App: React.FC = () => {
     const [selectedCBMs, setSelectedCBMs] = useState<string[]>([]);
     const [selectedImpactAreas, setSelectedImpactAreas] = useState<ImpactArea[]>([]);
     const [selectedPractice, setSelectedPractice] = useState<Practice | null>(null);
+    const [selectedStatus, setSelectedStatus] = useState<ImplementationStatus | null>(null);
 
     const uniqueCBMs = useMemo(() => [...new Set(practices.map(p => p.cbmDeOrigem))], []);
     const uniqueImpactAreas = useMemo(() => [...new Set(practices.flatMap(p => p.areasDeImpacto))] as ImpactArea[], []);
@@ -20,9 +21,10 @@ const App: React.FC = () => {
         return practices.filter(practice => {
             const cbmMatch = selectedCBMs.length === 0 || selectedCBMs.includes(practice.cbmDeOrigem);
             const impactAreaMatch = selectedImpactAreas.length === 0 || practice.areasDeImpacto.some(area => selectedImpactAreas.includes(area));
-            return cbmMatch && impactAreaMatch;
+            const statusMatch = selectedStatus === null || practice.status === selectedStatus;
+            return cbmMatch && impactAreaMatch && statusMatch;
         });
-    }, [selectedCBMs, selectedImpactAreas]);
+    }, [selectedCBMs, selectedImpactAreas, selectedStatus]);
     
     const handleCBMChange = (cbm: string) => {
         setSelectedCBMs(prev =>
@@ -36,9 +38,14 @@ const App: React.FC = () => {
         );
     };
 
+    const handleStatusSelect = (status: ImplementationStatus) => {
+        setSelectedStatus(prev => (prev === status ? null : status));
+    };
+
     const clearFilters = () => {
         setSelectedCBMs([]);
         setSelectedImpactAreas([]);
+        setSelectedStatus(null);
     };
     
     return (
@@ -56,7 +63,11 @@ const App: React.FC = () => {
                 />
                 <div className="flex-1 p-4 md:p-8">
                     <div className="mb-8">
-                        <Dashboard practices={filteredPractices} />
+                        <Dashboard 
+                            practices={filteredPractices}
+                            selectedStatus={selectedStatus}
+                            onStatusSelect={handleStatusSelect}
+                        />
                     </div>
 
                     <h2 className="text-2xl font-bold text-gray-800 mb-4">
