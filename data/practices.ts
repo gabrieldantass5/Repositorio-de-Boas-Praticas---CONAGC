@@ -1,7 +1,7 @@
 
 import { Practice, ImplementationStatus, ImpactArea } from '../types';
 
-export const practices: Practice[] = [
+export const initialPractices: Practice[] = [
     {
         nomeDaPratica: "BRAVO ESTRATÉGIA - Ferramenta de monitoramento das ações e OKR",
         cbmDeOrigem: "CBMPB",

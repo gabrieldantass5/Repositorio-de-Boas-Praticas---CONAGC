@@ -1,6 +1,14 @@
 import React, { useMemo } from 'react';
 import type { Practice } from '../types';
 import { ImplementationStatus } from '../types';
+import { DownloadIcon } from './icons';
+
+// Add type declaration for jspdf
+declare global {
+    interface Window {
+        jspdf: any;
+    }
+}
 
 interface DashboardProps {
     practices: Practice[];
@@ -54,10 +62,84 @@ const Dashboard: React.FC<DashboardProps> = ({ practices, selectedStatus, onStat
     
     const maxCount = useMemo(() => Math.max(...chartData.map(d => d.count), 1), [chartData]);
 
+    const handleExportPDF = () => {
+        if (practices.length === 0 || typeof window.jspdf === 'undefined') {
+            return;
+        }
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: 'landscape' });
+
+        doc.setFontSize(18);
+        doc.text("Relatório de Boas Práticas - CONAGC", 14, 22);
+        doc.setFontSize(11);
+        doc.setTextColor(100);
+        const generationDate = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        doc.text(`Relatório gerado em: ${generationDate}`, 14, 30);
+        doc.text(`Total de práticas filtradas: ${practices.length}`, 14, 36);
+
+        const tableColumn = ["Nome da Prática", "CBM", "Responsável", "Status", "Áreas de Impacto"];
+        const tableRows: (string | number)[][] = [];
+
+        practices.forEach(practice => {
+            const practiceData = [
+                practice.nomeDaPratica,
+                practice.cbmDeOrigem,
+                practice.responsavel,
+                practice.status,
+                practice.areasDeImpacto.join('; ')
+            ];
+            tableRows.push(practiceData);
+        });
+
+        (doc as any).autoTable({
+            head: [tableColumn],
+            body: tableRows,
+            startY: 45,
+            theme: 'striped',
+            styles: {
+                font: 'helvetica',
+                fontSize: 8,
+                cellPadding: 2,
+                overflow: 'linebreak',
+            },
+            headStyles: {
+                fillColor: [189, 3, 11],
+                textColor: 255,
+                fontStyle: 'bold',
+            },
+            columnStyles: {
+                0: { cellWidth: 80 },
+                1: { cellWidth: 20 },
+                2: { cellWidth: 40 },
+                3: { cellWidth: 30 },
+                4: { cellWidth: 'auto' },
+            },
+            didDrawPage: function (data: any) {
+                const pageCount = doc.internal.getNumberOfPages();
+                doc.setFontSize(8);
+                doc.setTextColor(100);
+                doc.text(`Página ${data.pageNumber} de ${pageCount}`, data.settings.margin.left, doc.internal.pageSize.height - 10);
+            }
+        });
+
+        doc.save("boas_praticas_conagc.pdf");
+    };
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-3xl font-bold text-slate-800 mb-8">Visão Geral</h2>
+            <div className="flex justify-between items-center mb-8">
+                <h2 className="text-3xl font-bold text-slate-800">Visão Geral</h2>
+                <button
+                    onClick={handleExportPDF}
+                    disabled={practices.length === 0}
+                    className="flex items-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    aria-label="Exportar práticas filtradas para PDF"
+                >
+                    <DownloadIcon className="w-5 h-5 mr-2" />
+                    Exportar PDF
+                </button>
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
                 <StatCard 
