@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Practice, ImplementationStatus, ImpactArea } from '../types';
 
 interface PracticeFormProps {
@@ -35,24 +34,29 @@ const PracticeForm: React.FC<PracticeFormProps> = ({ onAddPractice }) => {
         return newErrors;
     };
 
+    useEffect(() => {
+        const validationErrors = validate(formData);
+        const currentErrors: Record<string, string> = {};
+        
+        // Only update errors for fields that have been touched to avoid showing errors prematurely
+        Object.keys(touched).forEach((name) => {
+            if (validationErrors[name]) {
+                currentErrors[name] = validationErrors[name];
+            }
+        });
+        setErrors(currentErrors);
+    }, [formData, touched]);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        const newFormData = { ...formData, [name]: value };
-        setFormData(newFormData);
-
-        if (touched[name]) {
-            const validationErrors = validate(newFormData);
-            setErrors(prev => ({ ...prev, [name]: validationErrors[name] }));
-        }
+        // Use functional update to prevent issues with stale state
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name } = e.target;
-        if (!touched[name]) {
-            setTouched(prev => ({ ...prev, [name]: true }));
-        }
-        const validationErrors = validate(formData);
-        setErrors(prev => ({ ...prev, [name]: validationErrors[name] }));
+        // Just mark the field as touched. useEffect will handle validation.
+        setTouched(prev => ({ ...prev, [name]: true }));
     };
 
     const handleImpactAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,12 +69,7 @@ const PracticeForm: React.FC<PracticeFormProps> = ({ onAddPractice }) => {
             const newAreas = checked
                 ? [...prev.areasDeImpacto, area]
                 : prev.areasDeImpacto.filter(a => a !== area);
-            const newFormData = { ...prev, areasDeImpacto: newAreas };
-            
-            const validationErrors = validate(newFormData);
-            setErrors(currentErrors => ({ ...currentErrors, areasDeImpacto: validationErrors.areasDeImpacto }));
-            
-            return newFormData;
+            return { ...prev, areasDeImpacto: newAreas };
         });
     };
 
@@ -79,7 +78,7 @@ const PracticeForm: React.FC<PracticeFormProps> = ({ onAddPractice }) => {
         const validationErrors = validate(formData);
         
         if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
+            // Mark all fields as touched to show all errors on submit attempt
             const allTouched = Object.keys(formData).reduce((acc, key) => {
                 acc[key] = true;
                 return acc;
@@ -107,27 +106,27 @@ const PracticeForm: React.FC<PracticeFormProps> = ({ onAddPractice }) => {
                 <h2 className="text-2xl font-bold text-gray-800 mb-1">Adicionar Nova Prática de Gestão</h2>
                 <p className="text-gray-500 mb-6">Preencha os campos abaixo para submeter uma nova boa prática ao repositório.</p>
                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-                    <FormField label="Nome da Prática" name="nomeDaPratica" required error={touched.nomeDaPratica ? errors.nomeDaPratica : undefined}>
-                        <input type="text" id="nomeDaPratica" name="nomeDaPratica" value={formData.nomeDaPratica} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500" />
+                    <FormField label="Nome da Prática" name="nomeDaPratica" required error={errors.nomeDaPratica}>
+                        <input type="text" id="nomeDaPratica" name="nomeDaPratica" value={formData.nomeDaPratica} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white text-gray-900" />
                     </FormField>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <FormField label="CBM de Origem" name="cbmDeOrigem" required error={touched.cbmDeOrigem ? errors.cbmDeOrigem : undefined}>
-                            <input type="text" id="cbmDeOrigem" name="cbmDeOrigem" value={formData.cbmDeOrigem} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500" />
+                        <FormField label="CBM de Origem" name="cbmDeOrigem" required error={errors.cbmDeOrigem}>
+                            <input type="text" id="cbmDeOrigem" name="cbmDeOrigem" value={formData.cbmDeOrigem} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white text-gray-900" />
                         </FormField>
-                        <FormField label="Responsável" name="responsavel" required error={touched.responsavel ? errors.responsavel : undefined}>
-                            <input type="text" id="responsavel" name="responsavel" value={formData.responsavel} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500" />
+                        <FormField label="Responsável" name="responsavel" required error={errors.responsavel}>
+                            <input type="text" id="responsavel" name="responsavel" value={formData.responsavel} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white text-gray-900" />
                         </FormField>
                     </div>
 
-                    <FormField label="Status da Implementação" name="status" required error={touched.status ? errors.status : undefined}>
-                        <select id="status" name="status" value={formData.status} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white">
+                    <FormField label="Status da Implementação" name="status" required error={errors.status}>
+                        <select id="status" name="status" value={formData.status} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white text-gray-900">
                             <option value="" disabled>Selecione um status</option>
                             {Object.values(ImplementationStatus).map(status => <option key={status} value={status}>{status}</option>)}
                         </select>
                     </FormField>
 
-                    <FormField label="Áreas de Impacto" name="areasDeImpacto" required error={touched.areasDeImpacto ? errors.areasDeImpacto : undefined}>
+                    <FormField label="Áreas de Impacto" name="areasDeImpacto" required error={errors.areasDeImpacto}>
                          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4 border border-gray-200 rounded-md max-h-60 overflow-y-auto">
                             {Object.values(ImpactArea).map(area => (
                                 <label key={area} className="flex items-center cursor-pointer">
@@ -138,32 +137,32 @@ const PracticeForm: React.FC<PracticeFormProps> = ({ onAddPractice }) => {
                         </div>
                     </FormField>
 
-                    <FormField label="Resumo da Prática" name="resumo" required error={touched.resumo ? errors.resumo : undefined}>
-                        <textarea id="resumo" name="resumo" rows={3} value={formData.resumo} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white" />
+                    <FormField label="Resumo da Prática" name="resumo" required error={errors.resumo}>
+                        <textarea id="resumo" name="resumo" rows={3} value={formData.resumo} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white text-gray-900" />
                     </FormField>
                     
                     <FormField label="Tema da Apresentação" name="temaApresentacao">
-                        <input type="text" id="temaApresentacao" name="temaApresentacao" value={formData.temaApresentacao} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500" />
+                        <input type="text" id="temaApresentacao" name="temaApresentacao" value={formData.temaApresentacao} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white text-gray-900" />
                     </FormField>
 
                     <FormField label="Problema Abordado" name="problemaAbordado">
-                        <textarea id="problemaAbordado" name="problemaAbordado" rows={3} value={formData.problemaAbordado} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white" />
+                        <textarea id="problemaAbordado" name="problemaAbordado" rows={3} value={formData.problemaAbordado} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white text-gray-900" />
                     </FormField>
 
                     <FormField label="Metodologia / Passos de Implementação" name="metodologia">
-                        <textarea id="metodologia" name="metodologia" rows={3} value={formData.metodologia} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white" />
+                        <textarea id="metodologia" name="metodologia" rows={3} value={formData.metodologia} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white text-gray-900" />
                     </FormField>
 
                     <FormField label="Resultados Alcançados (Indicadores Chave)" name="resultados">
-                        <textarea id="resultados" name="resultados" rows={3} value={formData.resultados} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white" />
+                        <textarea id="resultados" name="resultados" rows={3} value={formData.resultados} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white text-gray-900" />
                     </FormField>
 
                     <FormField label="Lições Aprendidas (Pontos de Atenção)" name="licoesAprendidas">
-                        <textarea id="licoesAprendidas" name="licoesAprendidas" rows={3} value={formData.licoesAprendidas} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white" />
+                        <textarea id="licoesAprendidas" name="licoesAprendidas" rows={3} value={formData.licoesAprendidas} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white text-gray-900" />
                     </FormField>
 
                     <FormField label="Comentários Adicionais" name="comentariosAdicionais">
-                        <textarea id="comentariosAdicionais" name="comentariosAdicionais" rows={3} value={formData.comentariosAdicionais} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white" />
+                        <textarea id="comentariosAdicionais" name="comentariosAdicionais" rows={3} value={formData.comentariosAdicionais} onChange={handleInputChange} onBlur={handleBlur} className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 bg-white text-gray-900" />
                     </FormField>
 
                     <div className="pt-4 flex justify-end">
