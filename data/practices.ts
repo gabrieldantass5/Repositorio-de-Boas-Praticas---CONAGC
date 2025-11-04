@@ -1,0 +1,117 @@
+
+import { Practice, ImplementationStatus, ImpactArea } from '../types';
+
+export const practices: Practice[] = [
+    {
+        nomeDaPratica: "BRAVO ESTRATÉGIA - Ferramenta de monitoramento das ações e OKR",
+        cbmDeOrigem: "CBMPB",
+        responsavel: "TC IOLANDA",
+        areasDeImpacto: [ImpactArea.PlanejamentoEstrategico],
+        status: ImplementationStatus.FaseInicial,
+        resumo: "Monitora as ações estratégicas e Objetivos Chaves para alcance das Metas do Planejamento Estratégico 2024/2027.",
+        temaApresentacao: "Bravo Estratégia",
+        problemaAbordado: "Ausência de ferramenta digital para monitorar as Ações estratégicas e os objetivos chaves dos Planos de Ação.",
+        metodologia: "Possuíamos os Planos de Ação e os OKR, logo foi solicitado apoio do setor de automação institucional uma ferramenta que não fosse apenas planilha de Excel. Precisávamos de resposta em tempo real e sem falhas.",
+        resultados: "70% dos setores alimentam o sistema BRAVO.",
+        licoesAprendidas: "Definir periodicidade de alimentação; encontrar o militar com perfil para entender os dados que precisavam alimentar.",
+        comentariosAdicionais: "O BRAVO ESTRATÉGIA, ferramenta criada pelo DTI - Departamento da Tecnologia da Informação, através da necessidade da implementação das ações estratégicas referentes ao alcance das Metas do Planejamento estratégico 2024/2027, se fez urgente devido a escassez de pessoal. A fase de implementação dos Planos de Ação e OKR necessitava ser mais fidedigna e real. Trata-se de um projeto em andamento, mas ainda com ajustes finos."
+    },
+    {
+        nomeDaPratica: "Modelo de Gestão Estratégica do CBMAL",
+        cbmDeOrigem: "CBMAL",
+        responsavel: "Luiz Augusto de Medeiros Lira - MAJ QOEM BM",
+        areasDeImpacto: [ImpactArea.PlanejamentoEstrategico, ImpactArea.GovernancaCorporativa, ImpactArea.GestaoDeProjetos],
+        status: ImplementationStatus.Consolidada,
+        resumo: "Modelo de gestão estratégica baseado em metodologias consagradas, implementado a 'custo zero' para o erário público. Resultou na instituição da Política de Gestão Estratégica, criação do Escritório de Projetos, e adoção do Sistema de Gestão Estratégica (SGE), contribuindo para a geração de valor público.",
+        temaApresentacao: "Modelo de Gestão Estratégica do CBMAL: da criação à institucionalização.",
+        problemaAbordado: "Ausência de uma estratégia organizacional formalizada com rigor metodológico e a necessidade de conferir uma nova roupagem aos processos e práticas de planejamento.",
+        metodologia: "Diagnóstico organizacional, uso do Balanced Scorecard (BSC), institucionalização da Política de Gestão Estratégica, parceria com ITEC/AL para adoção do SGE, criação do Escritório de Projetos, e planejamento para 2025-2029.",
+        resultados: "Criação de diversos instrumentos de gestão (Plano Estratégico, Mapa Estratégico, etc.), desenvolvimento interno de metodologia a custo zero, implementação de resultados práticos em 8 Temas Estratégicos, e execução geral das iniciativas do Plano Estratégico 2020-2024.",
+        licoesAprendidas: "Cultura: Resistência às mudanças organizacionais. Pessoas/Engajamento: Baixo engajamento de alguns setores e descumprimento de prazos.",
+        comentariosAdicionais: "O modelo é plenamente replicável e utiliza princípios como cientificidade, gestão participativa e foco no cidadão, configurando uma inovação na gestão corporativa do CBMAL."
+    },
+    {
+        nomeDaPratica: "Monitoramento de Indicadores",
+        cbmDeOrigem: "CBPMESP",
+        responsavel: "Capitão PM João Rafael Mininel",
+        areasDeImpacto: [ImpactArea.PlanejamentoEstrategico, ImpactArea.GovernancaCorporativa, ImpactArea.GestaoDeProjetos, ImpactArea.OrcamentoEFinancas, ImpactArea.ProcessosEQualidade],
+        status: ImplementationStatus.FaseInicial,
+        resumo: "A prática estabelece um rol de indicadores estratégicos relacionados aos serviços prestados pela organização, como medidas de desempenho e execução estratégica do Corpo de Bombeiros, para possibilitar o monitoramento e controle das iniciativas e processos internos.",
+        temaApresentacao: "Indicadores Estratégicos - CBPMESP",
+        problemaAbordado: "Não havia uma sistemática de monitoramento e controle efetivo, centralizado e consolidado em nível estratégico.",
+        metodologia: "Levantamento das iniciativas de caráter estratégico, definição de indicadores e implementação de memoriais de cálculo.",
+        resultados: "Foram estabelecidos indicadores junto às ferramentas estratégicas da organização.",
+        licoesAprendidas: "Dificuldade de consolidação de indicadores.",
+        comentariosAdicionais: ""
+    },
+    {
+        nomeDaPratica: "Painel de Monitoramento e Controle dos Planos de Gestão Anuais e da Captação de Recursos Alternativos",
+        cbmDeOrigem: "CBMGO",
+        responsavel: "Cap QOA/Administrativo Eduardo Gonçalves de Almeida",
+        areasDeImpacto: [ImpactArea.PlanejamentoEstrategico, ImpactArea.GovernancaCorporativa, ImpactArea.GestaoDeRiscos, ImpactArea.GestaoDeProjetos, ImpactArea.OrcamentoEFinancas],
+        status: ImplementationStatus.FaseInicial,
+        resumo: "O CBMGO implementou um processo de monitoramento de projetos utilizando Google Workspace e Looker Studio (BI) para otimizar a gestão e fortalecer a governança. Projetos são monitorados via Google Sheets e Google Forms, com dados consolidados e visualizados em um painel de BI, permitindo monitoramento em tempo real e suporte à decisão estratégica.",
+        temaApresentacao: "Monitoramento Integrado de Projetos por Meio de Google Workspace e BI",
+        problemaAbordado: "A ausência de um sistema padronizado e automatizado para o acompanhamento dos projetos dificultava o monitoramento, a consolidação de informações e a tomada de decisão. Havia retrabalho e pouca visibilidade do desempenho.",
+        metodologia: "Mapeamento das necessidades, criação de planilhas no Google Sheets, configuração de formulários no Google Forms, automação do fluxo de dados e desenvolvimento de um Painel de BI no Looker Studio. Implantação de reuniões mensais de governança.",
+        resultados: "100% dos projetos de alta prioridade monitorados.",
+        licoesAprendidas: "A padronização das informações foi um desafio inicial. A adesão à rotina de atualização demandou acompanhamento próximo. A integração automática requer manutenção contínua das permissões e conexões do Google Workspace.",
+        comentariosAdicionais: ""
+    },
+    {
+        nomeDaPratica: "SENTINELA - Construindo um Ambiente Seguro para Todos",
+        cbmDeOrigem: "CBMMA",
+        responsavel: "CEL QOCBM CLEYTON, CEL QOCBM SILVA JÚNIOR, MAJ QOCBM DÉBORA, CAP QOCBM ARLINDO, 1° TEN QOCBM GABRIELA E 3° SGT BM PINHEIRO",
+        areasDeImpacto: [ImpactArea.PlanejamentoEstrategico, ImpactArea.GovernancaCorporativa, ImpactArea.GestaoDeRiscos, ImpactArea.GestaoDeProjetos, ImpactArea.GestaoDePessoas],
+        status: ImplementationStatus.FaseInicial,
+        resumo: "Iniciativa do Corpo de Bombeiros Militar do Maranhão voltada à formação de alunos, professores e funcionários de escolas em noções básicas de primeiros socorros, prevenção e combate a incêndios e autoproteção. O projeto-piloto foi realizado com êxito, e a expansão gradual começará em 2026 para consolidar uma rede de multiplicadores da cultura de segurança.",
+        temaApresentacao: "SENTINELA - Construindo um Ambiente Seguro para Todos.",
+        problemaAbordado: "O ambiente escolar apresenta vulnerabilidades quanto à resposta imediata a emergências. Observou-se a ausência de capacitação sistemática. O Projeto Sentinela surgiu para suprir essa lacuna.",
+        metodologia: "Desenvolvido em etapas: 1. Planejamento e estruturação. 2. Execução piloto. 3. Avaliação dos resultados. 4. Aperfeiçoamento do modelo. 5. Expansão prevista para 2026.",
+        resultados: "Realização do projeto piloto com aproximadamente 90% de adesão. Cerca de 255 participantes capacitados. Alto índice de aprovação (em torno de 95%). Produção de materiais didáticos e planos de aula padronizados.",
+        licoesAprendidas: "Necessidade de adequar a linguagem técnica à faixa etária dos alunos. Importância de envolver as gestões escolares desde o planejamento e garantir apoio logístico. O projeto demonstrou grande receptividade e engajamento.",
+        comentariosAdicionais: "O Projeto Sentinela reforça o compromisso do CBMMA com a educação preventiva e a proteção da vida. A iniciativa contribui para os Objetivos de Desenvolvimento Sustentável (ODS 3, 4 e 11) e está alinhada à Política Nacional de Proteção e Defesa Civil."
+    },
+    {
+        nomeDaPratica: "Monitorando Metas e Custos: Iniciativa de Alinhamento do PPA no Corpo de Bombeiros",
+        cbmDeOrigem: "CBMAC",
+        responsavel: "Ruana da Conceição Xavier Casas - MAJ BM/ Gerbson Francisco Nogueira Maia - SD BM",
+        areasDeImpacto: [ImpactArea.PlanejamentoEstrategico, ImpactArea.GestaoDeProjetos, ImpactArea.OrcamentoEFinancas],
+        status: ImplementationStatus.FaseInicial,
+        resumo: "Havia grande dificuldade em alinhar o orçamento com as metas do PPA. A prática consiste em disponibilizar planilhas para as unidades setoriais alimentarem informações de custeio e necessidades. Com as informações, criou-se um painel Power BI que facilita a visualização do andamento da execução orçamentária.",
+        temaApresentacao: "Monitorando Metas e Custos: Iniciativa de Alinhamento do PPA no Corpo de Bombeiros",
+        problemaAbordado: "Falta de informações referente ao monitoramento das metas do PPA. Dificuldade na captação de dados sobre execução de metas físicas e orçamentárias. Desconhecimento do custo e necessidades das unidades.",
+        metodologia: "Com apoio do comandante geral, criou-se uma planilha de fácil compreensão. Foram realizadas diversas reuniões de alinhamento. As planilhas são compiladas em um banco de dados, gerando painéis no Power BI. O fluxo do processo de diárias passa por um monitoramento na diretoria de planejamento.",
+        resultados: "Identificação das necessidades dos batalhões e unidades; Determinação do custo das unidades; Maior transparência em relação ao orçamento e sua aplicação.",
+        licoesAprendidas: "Desafios: Implementar a cultura de dados; Militares com dificuldade no manuseio de planilhas; Realidades diferentes em cada unidade. Lições: É necessário realizar visitas e conversas in loco, pois reuniões online não foram suficientes.",
+        comentariosAdicionais: "A iniciativa vem se destacando no Estado. O CBMAC já foi procurado para assessorar outras secretarias na implementação da ferramenta."
+    },
+    {
+        nomeDaPratica: "Implementação da gestão de risco em todos os níveis da corporação",
+        cbmDeOrigem: "CBMRN",
+        responsavel: "Santos Lima - Cel BM",
+        areasDeImpacto: [ImpactArea.GestaoDeRiscos],
+        status: ImplementationStatus.FaseInicial,
+        resumo: "Inicialmente criamos uma Portaria com a política de gestão de risco, logo em seguida produzimos um manual de aplicação. Realizamos reuniões estratégicas e workshops com todos os oficiais subalternos para consolidar a doutrina. Já começaram a ser produzidos os planos de implementação de controle de risco.",
+        temaApresentacao: "Gestão de risco",
+        problemaAbordado: "Preocupação com a segurança jurídica e técnica nas ações operacionais.",
+        metodologia: "Iniciou como uma iniciativa do Plano Estratégico. Criação da política da instituição sobre o tema e elaboração de manual de gestão de risco (exemplos e modelagem do CBMRN) para 2025-2029.",
+        resultados: "Iniciamos há pouco a implementação... Ainda não temos resultados dos indicadores.",
+        licoesAprendidas: "Desafio é trazer um tema de grande relevância tanto operacional com administrativo, criar estratégia pra conseguir engajamento dos oficiais mais antigos e das praças nesse processo.",
+        comentariosAdicionais: ""
+    },
+    {
+        nomeDaPratica: "Criação do Escritório de Gerenciamento de Projetos do CBMPR",
+        cbmDeOrigem: "CBMPR",
+        responsavel: "Thiago Schinzel, Cap. QOBM",
+        areasDeImpacto: [ImpactArea.PlanejamentoEstrategico, ImpactArea.GovernancaCorporativa, ImpactArea.GestaoDeProjetos],
+        status: ImplementationStatus.Consolidada,
+        resumo: "A criação do Escritório de Gerenciamento de Projetos (EGP/CBMPR) surgiu de uma oportunidade estratégica. Inicialmente provisório, o EGP foi implantado para apoiar a execução do portfólio estratégico. A fase experimental demonstrou valor, consolidando o modelo. Após o sucesso do programa de desvinculação da PMPR, o EGP foi implantado definitivamente, tornando-se referência na cultura de gestão de projetos no Estado.",
+        temaApresentacao: "Criação do EGP/CBMPR",
+        problemaAbordado: "Projetos com atraso, encerrados sem sucesso. Falta de metodologia, ferramentas e técnicas padronizadas, falta de conhecimento por parte de gerentes e equipes.",
+        metodologia: "Implantação provisória. Capacitação do efetivo. Padronização de metodologia. Projeto de desvinculação. Implantação definitiva.",
+        resultados: "Emancipação do CBMPR. Política de Gerenciamento de Projetos implementada. 120 militares capacitados em fundamentos básicos. 30 Oficiais especializados em Gestão de Projetos. Criação de um portfólio estratégico com mais de 25 projetos atualmente.",
+        licoesAprendidas: "Desafios no convencimento de principais stakeholders e engajamento de potenciais patrocinadores. Adaptação de metodologia à realidade do CBMPR.",
+        comentariosAdicionais: ""
+    }
+];
