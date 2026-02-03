@@ -302,8 +302,4 @@ Agradecemos a todos os Corpos de Bombeiros Militares que contribuíram com suas 
 
 <div align="center">
 
-**Feito com ❤️ para os Bombeiros Militares do Brasil**
-
-⭐ Se este projeto foi útil, considere dar uma estrela!
-
 </div>
