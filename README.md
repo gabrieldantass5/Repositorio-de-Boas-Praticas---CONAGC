@@ -11,7 +11,7 @@
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.x-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-[🚀 Demo ao Vivo]([https://ai.studio/apps/drive/1Y8wlUwo31gwrDxPvjGydqS_XGhkd2xdW](https://gabrieldantass5.github.io/Repositorio-de-Boas-Praticas---CONAGC/)) • [📖 Documentação](#documentação) • [🤝 Contribuir](#como-contribuir)
+[🚀 Demo ao Vivo]([https://ai.studio/apps/drive/1Y8wlUwo31gwrDxPvjGydqS_XGhkd2xdW](https://gabrieldantass5.github.io/Repositorio-de-Boas-Praticas---CONAGC/](https://gabrieldantass5.github.io/Repositorio-de-Boas-Praticas---CONAGC/))) • [📖 Documentação](#documentação) • [🤝 Contribuir](#como-contribuir)
 
 </div>
 
